@@ -1,0 +1,7 @@
+# .clang-format
+BasedOnStyle: LLVM
+IndentWidth: 2
+TabWidth: 2
+ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: Empty
+PointerAlignment: Left

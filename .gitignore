@@ -1,0 +1,15 @@
+# Build directories
+build/
+
+# LSP and Editor caches
+.cache/
+.clangd/
+compile_commands.json
+
+# macOS specific
+.DS_Store
+
+# Compiled binaries and debug symbols
+*.out
+*.app
+*.dSYM/
