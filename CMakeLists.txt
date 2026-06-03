@@ -7,3 +7,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
+
+add_custom_target(run COMMAND ${PROJECT_NAME} DEPENDS ${PROJECT_NAME})
