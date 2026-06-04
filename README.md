@@ -19,7 +19,7 @@ git clone https://github.com/CostinDragos/strict-mac-cpp26.git my_project
 cd my_project
 ```
 
-2. Configure and build the project:
+1. Configure and build the project:
 
 ```bash
 cmake -B build -G Ninja -DCMAKE_TOOLCHAIN_FILE=homebrew-llvm.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
@@ -33,7 +33,7 @@ cmake -B build -G Ninja -DCMAKE_TOOLCHAIN_FILE=homebrew-llvm.cmake -DCMAKE_BUILD
 cmake --build build
 ```
 
-3. Run the executable:
+1. Run the executable:
 
 ```bash
 ./build/my_project
@@ -53,12 +53,17 @@ ln -s build/compile_commands.json .
 
 Useful mappings for formatting, building, and documentation:
 
+> Note: The `<leader>r` command has been updated to dynamically build and run the specific file you are currently editing. If you want to build the entire main project, you can use the alternative `<leader>R` mapping.
+
 ```vim
 # Format the current file with clang-format
 autocmd FileType c,cpp nnoremap <buffer> <leader>f :silent !/opt/homebrew/opt/llvm/bin/clang-format -i %<CR>:edit!<CR>:redraw!<CR>:echo "Formatted!"<CR>
 
-# Build and run the project
-autocmd FileType cpp nnoremap <buffer> <leader>r :w<CR>:execute 'vert term zsh -c "cd ' . shellescape(fnamemodify(findfile('CMakeLists.txt', expand('%:p:h') . ';'), ':p:h')) . ' && cmake --build build --target run"'<CR>
+# Build and run the current file directly (dynamic)
+autocmd FileType cpp nnoremap <buffer> <leader>r :w<CR>:execute 'leftabove vert term zsh -c "cd ' . shellescape(fnamemodify(findfile('CMakeLists.txt', expand('%:p:h') . ';'), ':p:h')) . ' && cmake --build build --target ' . expand('%:t:r') . ' && ./build/' . expand('%:t:r') . '"'<CR>
+
+# Build and run the main program (runs the 'run' target)
+autocmd FileType cpp nnoremap <buffer> <leader>R :w<CR>:execute 'vert term zsh -c "cd ' . shellescape(fnamemodify(findfile('CMakeLists.txt', expand('%:p:h') . ';'), ':p:h')) . ' && cmake --build build --target run"'<CR>
 
 # Open cppman documentation for the symbol under the cursor
 autocmd FileType cpp nnoremap <buffer> gK :execute 'vert term cppman ' . expand('<cword>')<CR>
